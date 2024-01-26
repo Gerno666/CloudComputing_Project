@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Salary Prediction</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/styles/style.css">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Francois+One&family=Rampart+One&family=Bebas+Neue&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <header class="header clearfix">
+      <a href="{{ url_for('predict') }}" class="header__logo"><img src="../static/images/logo.png" height="50px" width="50px" alt="Logo"></a>
+      <a href="" class="header__icon-bar">
+          <span></span>
+          <span></span>
+          <span></span>
+      </a>
+      <ul class="header__menu animate">
+          <li class="header__menu__item"><a href="{{ url_for('predict') }}" >Predict Page</a></li>
+          <li class="header__menu__item"><a href="{{ url_for('explore') }}" >Explore Page</a></li>
+      </ul>
+    </header>
+
+    <section class="cover">
+        <div class="cover__filter"></div>
+        <div class="cover__caption">
+            <div class="cover__caption__copy">
+                <h1>Explore Software Engineer Salaries</h1>
+                <h2>Stack Overflow Developer Survey 2022</h2>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+      <div class="section__filter"></div>
+      <div class="section__caption">
+          <div class="section__caption__copy">
+              <h3>Number of Data from different countries</h3>
+          </div>
+      </div>
+      <img src="data:image/png;base64,{{ grafico1 }}" alt="Grafico1">
+    </section>
+
+    <section class="section">
+      <div class="section__filter"></div>
+      <div class="section__caption">
+          <div class="section__caption__copy">
+              <h3>Mean Salary Based On Country</h3>
+          </div>
+      </div>
+      <img src="data:image/png;base64,{{ grafico2 }}" alt="Grafico2">
+    </section>
+
+    <section class="section">
+      <div class="section__filter"></div>
+      <div class="section__caption">
+          <div class="section__caption__copy">
+              <h3>Mean Salary Based On Country and Gender</h3>
+          </div>
+      </div>
+      <img src="data:image/png;base64,{{ grafico5 }}" alt="Grafico5">
+    </section>
+
+    <section class="section">
+      <div class="section__filter"></div>
+      <div class="section__caption">
+          <div class="section__caption__copy">
+              <h3>Mean Salary Based On Age</h3>
+          </div>
+      </div>
+      <img src="data:image/png;base64,{{ grafico3 }}" alt="Grafico3">
+      <div id="text"><h3 id="output1"></h3></div>
+    </section>
+
+    <section class="section">
+      <div class="section__filter"></div>
+      <div class="section__caption">
+          <div class="section__caption__copy">
+              <h3>Mean Salary Based On Experience</h3>
+          </div>
+      </div>
+      <img src="data:image/png;base64,{{ grafico4 }}" alt="Grafico4">
+    </section>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"> </script>
+    <script>
+        $(document).ready(function(){
+
+            $(".header__icon-bar").click(function(e){
+
+                $(".header__menu").toggleClass('is-open');
+                e.preventDefault();
+            })
+        });
+    </script>
+
+  </body>
+
+</html>

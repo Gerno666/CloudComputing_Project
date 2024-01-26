@@ -1,0 +1,13 @@
+# pycaret
+Flask
+Jinja2
+gunicorn
+certifi
+itsdangerous
+numpy
+pandas
+scikit-learn
+matplotlib
+google-cloud-storage
+datetime
+tensorflow

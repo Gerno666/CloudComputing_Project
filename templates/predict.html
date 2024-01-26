@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Salary Prediction</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/styles/style.css">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Francois+One&family=Rampart+One&family=Bebas+Neue&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <header class="header clearfix">
+      <a href="{{ url_for('predict') }}" class="header__logo"><img src="../static/images/logo.png" height="50px" width="50px" alt="Logo"></a>
+      <a href="" class="header__icon-bar">
+          <span></span>
+          <span></span>
+          <span></span>
+      </a>
+      <ul class="header__menu animate">
+          <li class="header__menu__item"><a href="{{ url_for('predict') }}" >Predict Page</a></li>
+          <li class="header__menu__item"><a href="{{ url_for('explore') }}" >Explore Page</a></li>
+      </ul>
+    </header>
+
+    <section class="cover">
+      <div class="cover__caption">
+          <div class="cover__caption__copy">
+              <h1>Software Developer Salary Prediction</h1>
+              <h2>We need some information to predict the salary</h2>
+          </div>
+      </div>
+    </section>
+
+    <section class="drop_down_menu">
+      <div class="drop_down_menu__caption">
+        <h3>Country</h3>
+      </div>
+      <select id="country" name="country">
+        <option value="United States of America">United States of America</option>
+        <option value="India">India</option>
+        <option value="United Kingdom of Great Britain and Northern Ireland">United Kingdom of Great Britain and Northern Ireland</option>
+        <option value="Germany">Germany</option>
+        <option value="Canada">Canada</option>
+        <option value="Brazil">Brazil</option>
+        <option value="France">France</option>
+        <option value="Spain">Spain</option>
+        <option value="Australia">Australia</option>
+        <option value="Netherlands">Netherlands</option>
+        <option value="Poland">Poland</option>
+        <option value="Italy">Italy</option>
+        <option value="Russian Federation">Russian Federation</option>
+        <option value="Switzerland">Switzerland</option>
+        <option value="Sweden">Sweden</option>
+      </select>
+    </section>
+
+    <section class="range">
+      <h3>Age</h3>
+      <input type="range" name="age" min="16" max="80" value="16" id="age">
+      <div id="slider-value-age">16</div>
+    </section>
+
+    <section class="drop_down_menu">
+      <div class="drop_down_menu__caption">
+        <h3>Gender</h3>
+      </div>
+      <select id="gender" name="gender">
+        <option value="Man">Man</option>
+        <option value="Woman">Woman</option>
+        <option value="Other">Other</option>
+      </select>
+    </section>
+
+    <section class="drop_down_menu">
+      <div class="drop_down_menu__caption">
+        <h3>Education Level</h3>
+      </div>
+      <select id="education" name="education">
+        <option value="Less than a Bachelors">Less than a Bachelors</option>
+        <option value="Bachelor’s degree">Bachelor’s degree</option>
+        <option value="Master’s degree">Master’s degree</option>
+        <option value="Post grad">Post grad</option>
+      </select>
+    </section>
+
+    <section class="range">
+      <h3>Years of Experience</h3>
+      <input type="range" name="experience" min="0" max="50" value="0" id="experience">
+      <div id="slider-value-exp">0</div>
+    </section>
+
+
+    <section class="predict">
+      <button id="my-button"><h1>Calculate Salary</h1></button>
+      <div id="res" style="display: none;"><h3 id="output"></h3></div>
+    </section>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"> </script>
+    <script>
+        $(document).ready(function(){
+
+            $(".header__icon-bar").click(function(e){
+
+                $(".header__menu").toggleClass('is-open');
+                e.preventDefault();
+            })
+        });
+    </script>
+
+    <script>
+      const slider_age = document.getElementById("age");
+      const sliderValueAge = document.getElementById("slider-value-age");
+
+      slider_age.addEventListener("input", function() {
+        const value = this.value;
+        const min = this.min;
+        const max = this.max;
+        const width = this.offsetWidth;
+
+        const percent = ((value - min) / (max - min)) * 97;
+        const position = (percent / 100) * width;
+
+        sliderValueAge.textContent = value;
+        sliderValueAge.style.left = position + "px";
+      });
+    </script>
+
+    <script>
+      const slider_exp = document.getElementById("experience");
+      const sliderValueExp = document.getElementById("slider-value-exp");
+
+      slider_exp.addEventListener("input", function() {
+        const value = this.value;
+        const min = this.min;
+        const max = this.max;
+        const width = this.offsetWidth;
+
+        const percent = ((value - min) / (max - min)) * 97;
+        const position = (percent / 100) * width;
+
+        sliderValueExp.textContent = value;
+        sliderValueExp.style.left = position + "px";
+      });
+    </script>
+
+    <script>
+      const button = document.getElementById("my-button");
+      const hiddenText = document.getElementById("res");
+
+      button.addEventListener("click", function() {
+        if (hiddenText.style.display === "none") {
+          hiddenText.style.display = "block";
+        }
+      });
+    </script>
+
+
+    <script>
+      document.getElementById('my-button').addEventListener('click', function() {
+          var country = document.getElementById('country').value;
+          var age = document.getElementById('age').value;
+          var gender = document.getElementById('gender').value;
+          var education = document.getElementById('education').value;
+          var experience = document.getElementById('experience').value;
+
+          var dataToSend = {
+              country: country,
+              age: age,
+              gender: gender,
+              education : education,
+              experience : experience
+          };
+
+          fetch('/prediction', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(dataToSend)
+          })
+          .then(response => response.text())
+          .then(data => {
+              document.getElementById('output').innerText = data;
+          });
+      });
+    </script>
+
+
+  </body>
+
+</html>
